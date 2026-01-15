@@ -53,7 +53,7 @@ This project demonstrates a complete Spring Integration workflow that:
       filename-pattern="${file.pattern}"
       channel="fileInputChannel"
       auto-create-directory="true">
-      <int:poller ref="fileToMessageTransformer"/>
+      <int:poller fixed-delay="1000" max-messages-per-poll="1"/>
   </int-file:inbound-channel-adapter>
   ```
 
