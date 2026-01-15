@@ -55,7 +55,7 @@
         filename-pattern="${file.pattern}"
         channel="fileInputChannel"
         auto-create-directory="true">
-        <int:poller ref="fileToMessageTransformer"/>
+        <int:poller ref="fileToMessageTransformer" fixed-delay="1000" max-messages-per-poll="1"/>
     </int-file:inbound-channel-adapter>
 
     <!-- Service activator that writes file data to DB -->
