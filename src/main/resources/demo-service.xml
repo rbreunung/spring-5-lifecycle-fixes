@@ -55,11 +55,17 @@
         filename-pattern="${file.pattern}"
         channel="fileInputChannel"
         auto-create-directory="true">
-        <int:poller ref="fileToMessageTransformer" fixed-delay="1000" max-messages-per-poll="1"/>
+        <int:poller fixed-delay="1000" max-messages-per-poll="1"/>
     </int-file:inbound-channel-adapter>
 
+    <!-- Channel for transformed messages -->
+    <int:channel id="toWriterChannel"/>
+    
+    <!-- Transform File to Message with file_name header -->
+    <int:transformer input-channel="fileInputChannel" output-channel="toWriterChannel" ref="fileToMessageTransformer"/>
+
     <!-- Service activator that writes file data to DB -->
-    <int:service-activator input-channel="fileInputChannel"
+    <int:service-activator input-channel="toWriterChannel"
         ref="fileMessageWriter"
         method="write"/>
 </beans>
